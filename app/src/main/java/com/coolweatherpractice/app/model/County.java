@@ -10,30 +10,35 @@ public class County {
     private String countyCode;
     private int cityId;
 
-    public int getId(){
+    public int getId() {
         return id;
     }
-    public void setId(int id){
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getCountyName(){
+    public String getCountyName() {
         return countyName;
     }
-    public void setCountyName(String name){
+
+    public void setCountyName(String name) {
         this.countyName = name;
     }
 
-    public String getCountyCode(){
+    public String getCountyCode() {
         return countyCode;
     }
-    public void setCountyCode(String code){
+
+    public void setCountyCode(String code) {
         this.countyCode = code;
     }
 
-    public int getCityId(){
+    public int getCityId() {
         return cityId;
     }
-    public void setCityId(int cid){
+
+    public void setCityId(int cid) {
         this.cityId = cid;
+    }
 }
