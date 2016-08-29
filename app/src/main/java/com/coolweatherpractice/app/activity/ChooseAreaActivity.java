@@ -1,7 +1,10 @@
 package com.coolweatherpractice.app.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -75,6 +78,20 @@ public class ChooseAreaActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /////先从SharedPreferences 文件中读取 city_selected 标志位，如果为 true 就说明当前已经选择过城市了，直接跳转到 WeatherActivity 即可
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if(prefs.getBoolean("city_selected",false)){    //public abstract boolean getBoolean (String key, boolean defValue) 从prefs中获取一个boolean类型的值。
+                                                        // 参数 key            获取的prefs的名称
+                                                        //      defValue       当此prefs不存在时返回的默认值
+                                                        // 返回值:  如果prefs存在，则返回prefs的值，否则返回defValue。
+            Intent intent = new Intent(this,WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        /////
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
         listView = (ListView) findViewById(R.id.list_view);//界面中的列表
@@ -93,9 +110,15 @@ public class ChooseAreaActivity extends AppCompatActivity{
                 if(currentLevel == LEVEL_PROVINCE){
                     selectedProvince = provinceList.get(i);
                     queryCities();//加载市级数据
-                }else if(currentLevel ==LEVEL_CITY){
+                }else if(currentLevel == LEVEL_CITY){
                     selectedCity = cityList.get(i);
                     queryCounties();//加载县级数据
+                }else if(currentLevel == LEVEL_COUNTY){   //如果当前级别是 LEVEL_COUNTY，就启动 WeatherActivity，并把当前选中县的县级代号传递过去。
+                    String countyCode = countyList.get(i).getCountyCode();
+                    Intent intent = new Intent(ChooseAreaActivity.this,WeatherActivity.class);
+                    intent.putExtra("countyCode",countyCode);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

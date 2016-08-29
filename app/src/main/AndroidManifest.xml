@@ -4,8 +4,9 @@
     android:versionCode="1"
     android:versionName="1.0">
 
-    <!--主要就修改了两点，第一是添加了访问网络的权限，第二是将 ChooseAreaActivity 配置
-    成主活动，这样一旦打开程序就会直接进入 ChooseAreaActivity 了-->
+    <!--1. 添加了访问网络的权限;将 ChooseAreaActivity 配置
+    成主活动，这样一旦打开程序就会直接进入 ChooseAreaActivity 了
+        2. -->
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
@@ -21,6 +22,11 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+        </activity>
+
+
+        <activity android:name=".activity.WeatherActivity">
 
         </activity>
 
